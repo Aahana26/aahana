@@ -9,6 +9,59 @@ function About() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState('');
 
+   const styles = {
+  loginContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)', // translucent white
+    padding: '30px',
+    borderRadius: '12px',
+    backdropFilter: 'blur(8px)',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    maxWidth: '300px',
+    marginTop: '20px',
+    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+    marginLeft: '40px',
+    marginRight: 'auto',
+    transform: 'translateX(20%)', // shift more to the right
+  },
+  input: {
+    width: '100%',
+    padding: '10px',
+    fontSize: '15px',
+    marginLeft:'-10px',
+    borderRadius: '8px',
+    border: '1px solid #ccc',
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    marginBottom: '12px',
+  },
+  buttonGroup: {
+    marginTop: '16px',
+    display: 'flex',
+    marginLeft: '-10px',
+    justifyContent: 'space-between',
+  },
+  loginBtn: {
+    padding: '8px 16px',
+    backgroundColor: '#ec4899', // 🌸 pink
+    color: 'white',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  },
+  cancelBtn: {
+    padding: '8px 16px',
+    backgroundColor: '#d97706',
+    color: 'white',
+    border: 'none',
+    borderRadius: '6px',
+    marginLeft:'40px',
+    cursor: 'pointer',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  },
+};
+
+
   useEffect(() => {
     fetchAbout();
     const token = localStorage.getItem('token');
@@ -86,68 +139,166 @@ function About() {
       <img src="/second.jpg" alt="Aahana" className="about-image" />
       <div className="about-text">
         <h2>About Me</h2>
-        {!isEditing ? (
-          <p>{aboutContent}</p>
-        ) : (
-          <textarea
-            value={editedContent}
-            onChange={(e) => setEditedContent(e.target.value)}
-            rows={6}
-            style={{ width: '100%' }}
-          />
-        )}
+      {isEditing ? (
+        <textarea
+          value={editedContent}
+          onChange={(e) => setEditedContent(e.target.value)}
+          rows={6}
+          style={{
+            width: '100%',
+            padding: '12px',
+            fontSize: '16px',
+            borderRadius: '8px',
+            border: '1px solid #ccc',
+            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+          }}
+        />
+      ) : (
+        <p>{aboutContent}</p>
+      )}
+
 
         {/* Admin actions */}
         {isLoggedIn ? (
   <>
     {isEditing ? (
-      <div>
-        <button onClick={handleSave}>Save</button>
-        <button onClick={() => setIsEditing(false)}>Cancel</button>
-      </div>
+      <>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '10px'
+        }}>
+          <button
+            onClick={handleSave}
+            style={{
+              padding: '10px 16px',
+              height: '40px',
+              fontSize:'15px',
+              backgroundColor: '#55AA18', // green
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+            }}
+          >
+            Save
+          </button>
+          <div style={{ textAlign: 'right' }}>
+            <button
+              onClick={() => setIsEditing(false)}
+              style={{
+                padding: '8px 16px',
+                backgroundColor: '#FFA825', // orange
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                marginLeft:'20px',
+                marginRight:'-25px',
+                fontSize:'15px',
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                marginBottom: '10px'
+              }}
+            >
+              Cancel
+            </button>
+            <br />
+            <button
+              onClick={() => {
+                localStorage.removeItem('token');
+                setIsLoggedIn(false);
+                setIsEditing(false);
+              }}
+              style={{
+                padding: '8px 16px',
+                backgroundColor: '#ec4899', // pink
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                fontWeight: '500'
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </>
     ) : (
-      <div>
-        <button onClick={() => setIsEditing(true)}>Edit</button>
-      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <button
+          onClick={() => setIsEditing(true)}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#ec4899', // pink
+            color: 'white',
+            border: 'none',
+            fontSize:'16px',
+            marginLeft:'10px',
+            marginTop:'20px',
+            borderRadius: '6px',
+            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            margin: '20px auto',
+            display: 'block'
+          }}
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => {
+            localStorage.removeItem('token');
+            setIsLoggedIn(false);
+          }}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#4f46e5', // indigo
+            cursor: 'pointer',
+            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            fontWeight: '500',
+            textDecoration: 'underline',
+            fontSize: '20px'
+          }}
+        >
+          Logout
+        </button>
+        </div>
     )}
-    <button
-      style={{ marginTop: '10px' }}
-      onClick={() => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        setIsEditing(false);
-      }}
-    >
-      Logout
-    </button>
   </>
 ) : (
   // login form section)}
 
           <>
             {!showLoginForm ? (
-              <button onClick={() => setShowLoginForm(true)}>Admin Login</button>
+              <button className="nav-link-btn" onClick={() => setShowLoginForm(true)}>Admin Login</button>
             ) : (
-              <div>
+              <div style={styles.loginContainer}>
                 <input
-                  type="text"
-                  placeholder="Username"
-                  value={loginDetails.username}
-                  onChange={(e) =>
-                    setLoginDetails({ ...loginDetails, username: e.target.value })
-                  }
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={loginDetails.password}
-                  onChange={(e) =>
-                    setLoginDetails({ ...loginDetails, password: e.target.value })
-                  }
-                />
-                <button onClick={handleLogin}>Login</button>
-                <button onClick={() => setShowLoginForm(false)}>Cancel</button>
-              </div>
+                    type="text"
+                    placeholder="Username"
+                    value={loginDetails.username}
+                    onChange={(e) =>
+                      setLoginDetails({ ...loginDetails, username: e.target.value })
+                    }
+                    style={styles.input}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={loginDetails.password}
+                    onChange={(e) =>
+                      setLoginDetails({ ...loginDetails, password: e.target.value })
+                    }
+                    style={styles.input}
+                  />
+                  <div style={styles.buttonGroup}>
+                    <button onClick={handleLogin} style={styles.loginBtn}>Login</button>
+                    <button onClick={() => setShowLoginForm(false)} style={styles.cancelBtn}>Cancel</button>
+                  </div>
+                </div>
+
             )}
           </>
         )}
@@ -158,3 +309,7 @@ function About() {
 }
 
 export default About;
+
+
+
+//rgb(255, 168, 37)
