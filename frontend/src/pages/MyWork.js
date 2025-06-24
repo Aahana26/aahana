@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; 
 import BottomNav from '../components/BottomNav';
 
 function MyWork() {
@@ -10,6 +11,7 @@ function MyWork() {
   const [newProject, setNewProject] = useState({ title: '', description: '' });
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [editedProject, setEditedProject] = useState({ title: '', description: '' });
+  const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:5000/api/projects')
@@ -108,8 +110,7 @@ function MyWork() {
 
   return (
     <div className="projects-container">
-      <h2 className="text-3xl font-bold mb-6 text-center text-purple-200">My Work</h2>
-
+      <h1 className="mywork-title">My Work</h1>
       {projects.length > 0 ? (
         <ul>
           {projects.map((project) => (
@@ -119,12 +120,16 @@ function MyWork() {
                   <input
                     type="text"
                     value={editedProject.title}
-                    onChange={(e) => setEditedProject({ ...editedProject, title: e.target.value })}
+                    onChange={(e) =>
+                      setEditedProject({ ...editedProject, title: e.target.value })
+                    }
                     className="block w-full p-2 mb-2 border rounded"
                   />
                   <textarea
                     value={editedProject.description}
-                    onChange={(e) => setEditedProject({ ...editedProject, description: e.target.value })}
+                    onChange={(e) =>
+                      setEditedProject({ ...editedProject, description: e.target.value })
+                    }
                     className="block w-full p-2 mb-2 border rounded"
                   />
                   <button
@@ -142,7 +147,16 @@ function MyWork() {
                 </>
               ) : (
                 <>
-                  <h3 className="text-xl font-bold">{project.title}</h3>
+                  <h3>
+                    <Link
+                      to={`/projects/${project.slug}`}
+                      className="project-title"
+                    >
+                      {project.title}
+                    </Link>
+                  </h3>
+                  
+                  <div className="divider" />
                   <p>{project.description}</p>
                   {isAdmin && (
                     <button

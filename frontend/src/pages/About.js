@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BottomNav from '../components/BottomNav';
+import axios from 'axios';
 
 function About() {
   const [aboutContent, setAboutContent] = useState('');

@@ -58,4 +58,16 @@ router.delete('/:id', authenticateToken, async (req, res) => {
   }
 });
 
+
+router.get('/slug/:slug', async (req, res) => {
+  try {
+    const project = await Project.findOne({ slug: req.params.slug });
+    if (!project) return res.status(404).json({ message: 'Project not found' });
+    res.json(project);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 export default router;
