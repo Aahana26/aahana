@@ -18,14 +18,29 @@ function ProjectDetails() {
       });
   }, [slug]);
 
-  if (!project) return <p style={{ textAlign: 'center' }}>Loading or project not found...</p>;
+  if (!project) return <p>Loading...</p>;
 
-  return (
-    <div style={{ padding: '2rem' }}>
-      <h1 className="text-3xl font-bold">{project.title}</h1>
-      <p className="mt-4">{project.description}</p>
-    </div>
-  );
-}
+    return (
+      <div className="project-detail-container">
+        <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
+
+        {/* ⬇️ Description from database */}
+        <div
+          className="mb-4"
+          dangerouslySetInnerHTML={{ __html: project.description }}
+        />
+
+        {/* ⬇️ Conditionally show image only for jewelry project */}
+        {project.slug === 'jewelry-website' && (
+          <img
+            src="/images/ring.png"
+            alt="Jewelry Screenshot"
+            style={{ width: '50%' }}
+            className="w-full max-w-md mx-auto rounded shadow"
+          />
+        )}
+      </div>
+    );
+  }
 
 export default ProjectDetails;

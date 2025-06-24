@@ -7,7 +7,7 @@ const router = express.Router();
 // GET about info
 router.get('/', async (req, res) => {
   try {
-    const about = await About.findOne();
+    const about = await About.findOne().sort({ _id: -1 });
     if (!about) {
       return res.status(404).json({ message: 'About info not found' });
     }

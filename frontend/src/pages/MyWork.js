@@ -155,7 +155,7 @@ function MyWork() {
                       {project.title}
                     </Link>
                   </h3>
-                  
+
                   <div className="divider" />
                   <p>{project.description}</p>
                   {isAdmin && (

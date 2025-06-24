@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import BottomNav from '../components/BottomNav';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function About() {
   const [aboutContent, setAboutContent] = useState('');
@@ -61,7 +63,6 @@ function About() {
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   },
 };
-
 
   useEffect(() => {
     fetchAbout();
@@ -141,22 +142,26 @@ function About() {
       <div className="about-text">
         <h2>About Me</h2>
       {isEditing ? (
-        <textarea
-          value={editedContent}
-          onChange={(e) => setEditedContent(e.target.value)}
-          rows={6}
-          style={{
-            width: '100%',
-            padding: '12px',
-            fontSize: '16px',
-            borderRadius: '8px',
-            border: '1px solid #ccc',
-            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-          }}
-        />
-      ) : (
-        <p>{aboutContent}</p>
-      )}
+  <ReactQuill
+    value={editedContent}
+    onChange={setEditedContent}
+    theme="snow"
+    modules={{
+      toolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ header: [1, 2, false] }],
+        ['link', 'image'], // allows image upload via URL or paste
+      ],
+    }}
+    style={{ marginBottom: '20px' }}
+  />
+) : (
+  <div
+    className="quill-content"
+    dangerouslySetInnerHTML={{ __html: aboutContent }}
+  />
+)}
+
 
 
         {/* Admin actions */}

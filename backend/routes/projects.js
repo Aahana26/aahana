@@ -1,6 +1,7 @@
 import express from 'express';
 import Project from '../models/Project.js';
 import { authenticateToken } from '../middleware/auth.js'; // your JWT verification middleware
+import slugify from 'slugify';
 
 const router = express.Router();
 
@@ -17,6 +18,8 @@ router.get('/', async (req, res) => {
 // POST a new project (admin only)
 router.post('/', authenticateToken, async (req, res) => {
   const { title, description, technologies, githubLink, demoLink, imageUrl } = req.body;
+  const slug = slugify(title, { lower: true, strict: true });
+
   const newProject = new Project({ title, description, technologies, githubLink, demoLink, imageUrl });
   try {
     await newProject.save();
