@@ -6,7 +6,7 @@ function ProjectDetails() {
   const [project, setProject] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/projects/slug/${slug}`) // 🔁 Updated to match backend route
+    fetch(`/api/projects/slug/${slug}`)
       .then((res) => {
         if (!res.ok) throw new Error('Project not found');
         return res.json();
@@ -18,29 +18,23 @@ function ProjectDetails() {
       });
   }, [slug]);
 
-  if (!project) return <p>Loading...</p>;
+  if (!project) return <p className="loading">Loading...</p>;
 
-    return (
-      <div className="project-detail-container">
-        <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
+  return (
+    <div className="project-detail-container">
+      <h1 className="project-detail-title">{project.title}</h1>
 
-        {/* ⬇️ Description from database */}
-        <div
-          className="mb-4"
-          dangerouslySetInnerHTML={{ __html: project.description }}
+      <div className="project-description">{project.description}</div>
+
+      {project.slug === 'jewelry-website' && (
+        <img
+          src="/images/ring.png"
+          alt="Jewelry Screenshot"
+          className="project-image"
         />
-
-        {/* ⬇️ Conditionally show image only for jewelry project */}
-        {project.slug === 'jewelry-website' && (
-          <img
-            src="/images/ring.png"
-            alt="Jewelry Screenshot"
-            style={{ width: '50%' }}
-            className="w-full max-w-md mx-auto rounded shadow"
-          />
-        )}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
+}
 
 export default ProjectDetails;

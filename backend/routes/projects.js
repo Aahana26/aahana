@@ -17,17 +17,23 @@ router.get('/', async (req, res) => {
 
 // POST a new project (admin only)
 router.post('/', authenticateToken, async (req, res) => {
-  const { title, description, technologies, githubLink, demoLink, imageUrl } = req.body;
-  const slug = slugify(title, { lower: true, strict: true });
+  const { title, description } = req.body;
 
-  const newProject = new Project({ title, description, technologies, githubLink, demoLink, imageUrl });
+  if (!title || !description) {
+    return res.status(400).json({ message: 'Title and description are required' });
+  }
+
   try {
-    await newProject.save();
-    res.status(201).json(newProject);
+    const slug = title.toLowerCase().replace(/\s+/g, '-');
+    const newProject = new Project({ title, description, slug });
+    const saved = await newProject.save();
+    res.status(201).json(saved);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error('Error saving project:', err);
+    res.status(500).json({ message: 'Server error while saving project' });
   }
 });
+
 
 // PUT update an existing project by ID (admin only)
 router.put('/:id', authenticateToken, async (req, res) => {
@@ -48,19 +54,18 @@ router.put('/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// DELETE a project by ID (admin only)
+// DELETE a project
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
-    if (!project) return res.status(404).json({ message: 'Project not found' });
+    const deleted = await Project.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: 'Project not found' });
 
-    await project.remove();
     res.json({ message: 'Project deleted successfully' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: 'Error deleting project' });
   }
 });
-
 
 router.get('/slug/:slug', async (req, res) => {
   try {

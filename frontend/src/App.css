@@ -134,6 +134,61 @@ html, body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.login-container {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 300px;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-left: 40px;
+  margin-right: auto;
+  transform: translateX(20%);
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  margin-left: -10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 12px;
+}
+
+.button-group {
+  margin-top: 16px;
+  display: flex;
+  margin-left: -10px;
+  justify-content: space-between;
+}
+
+.login-btn {
+  padding: 8px 16px;
+  background-color: #ec4899;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cancel-btn {
+  padding: 8px 16px;
+  background-color: #d97706;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-left: 40px;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
 /* === Projects Section (My Work) === */
 .projects-container {
   background-image: url('../public/1.png');
@@ -155,10 +210,13 @@ html, body {
   color: #0e272c;
   margin-left: -52.5rem;
   margin-top: 2rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
 }
 
 .projects-container a {
   color: black;
+
 }
 
 .project-card {
@@ -175,7 +233,9 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  }
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
 
 .project-card:hover {
   transform: translateY(-6px) scale(1.03);
@@ -233,6 +293,45 @@ body {
   }
 }
 
+/*the redirected page section*/
+.project-detail-container {
+  background-color: #0c2d47; /* Dark bluish background */
+  color: rgb(255, 255, 255);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.project-detail-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  margin-left: 33%; /* Shift title after 1/3rd */
+  color: white;
+}
+
+.project-description {
+  font-size: 1.5rem;
+  max-width: 700px;
+  color: #ffffff;
+  margin-left: 200px;
+  margin: 0 auto 2rem auto;
+  white-space: pre-line; /* Makes enter/newline work */
+}
+
+.project-image {
+  display: block;
+  margin: 2rem auto;
+  width: 50%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.loading {
+  color: white;
+  text-align: center;
+  margin-top: 3rem;
+}
+
 /* === Contact Section === */
 .contact-container {
   display: flex;
@@ -245,17 +344,21 @@ body {
   background-repeat: no-repeat;
   padding: 3rem;
   gap: 3rem;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .contact-details {
   color: rgb(0, 0, 0);
   font-size: 1.3rem;
   line-height: 2.2;
+  margin-left: 10px;
   max-width: 400px;
+  padding: 20px; /* added padding */
+  text-align: center; /* align text right as you wanted */
 }
 
 .contact-form {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(245, 237, 237, 0.85);
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -263,14 +366,30 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  
+  /* box-shadow and padding adjustments for consistency */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
 }
 
 .contact-form input,
 .contact-form textarea {
   padding: 0.8rem;
-  border: 1px solid #ccc;
+  border: 1px solid #6e8e46;
   border-radius: 0.5rem;
   font-size: 1rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* smooth transitions */
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #a292c7; /* purple focus border */
+  box-shadow: 0 0 8px rgba(159, 139, 205, 0.5);
+  background-color: #f9f7ff;
 }
 
 .contact-form textarea {
@@ -281,15 +400,18 @@ body {
 .contact-form button {
   padding: 0.8rem;
   font-size: 1rem;
-  background-color: #1e3a8a;
+  background-color: #8a76b9; /* purple-600 */
   color: white;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* smooth transitions */
+  font-family: inherit;
 }
 
 .contact-form button:hover {
-  background-color: #3749a0;
+  background-color: #553c9a; /* darker purple */
+  box-shadow: 0 4px 10px rgba(85, 60, 154, 0.5);
 }
 
 /* === Bottom Navigation === */
@@ -298,12 +420,14 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
+  height: 4%;
   background: rgba(1, 22, 40, 0.85);
   padding: 12px 0;
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 100px;
   z-index: 1000;
+  animation: fadeIn 0.4s ease;
 }
 
 .bottom-nav a {
@@ -312,10 +436,15 @@ body {
   text-decoration: none;
   font-size: 1.29rem;
   transition: color 0.3s;
+  padding: 8px 12px;
+  margin-top: -5px;
 }
 
 .bottom-nav a:hover {
-  color: #ddd;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .nav-link-btn {
@@ -370,5 +499,23 @@ body {
     flex-direction: column;
     gap: 10px;
     padding: 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottom-nav a {
+    font-size: 1.1rem;
+    padding: 10px 16px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

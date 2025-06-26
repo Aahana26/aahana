@@ -8,6 +8,7 @@ import cors from 'cors';
 import aboutRoutes from './routes/about.js';
 import projectRoutes from './routes/projects.js';
 import adminRoutes from './routes/admin.js';
+import contactRoutes from './routes/contact.js';
 
 const MONGO_URI = process.env.MONGO_URI;
 const app = express();
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 app.use('/api/about', aboutRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/contact', contactRoutes);
 
 mongoose.connect(MONGO_URI)
   .then(() => {

@@ -108,6 +108,34 @@ function MyWork() {
     }
   };
 
+  // Delete a project
+const handleDeleteProject = async (projectId) => {
+  const token = localStorage.getItem('token');
+  const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.ok) {
+      setProjects(projects.filter((p) => p._id !== projectId));
+      alert('Project deleted successfully!');
+    } else {
+      const data = await res.json();
+      alert(data.message || 'Error deleting project');
+    }
+  } catch (err) {
+    console.error('Delete error:', err);
+    alert('Server error during deletion');
+  }
+};
+
+
   return (
     <div className="projects-container">
       <h1 className="mywork-title">My Work</h1>
@@ -157,15 +185,25 @@ function MyWork() {
                   </h3>
 
                   <div className="divider" />
-                  <p>{project.description}</p>
-                  {isAdmin && (
-                    <button
-                      onClick={() => handleEditClick(project)}
-                      className="mt-2 px-3 py-1 bg-purple-600 text-white rounded"
-                    >
-                      Edit Project
-                    </button>
-                  )}
+                  <p style={{ whiteSpace: 'pre-line' }}>{project.description}</p>
+
+                    {isAdmin && (
+                      <>
+                        <button
+                          onClick={() => handleEditClick(project)}
+                          className="mt-2 px-3 py-1 bg-purple-600 text-white rounded"
+                        >
+                          Edit Project
+                        </button>
+                        <button
+                          onClick={() => handleDeleteProject(project._id)}
+                          className="mt-2 ml-2 px-3 py-1 bg-red-600 text-white rounded"
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
+
                 </>
               )}
             </li>
