@@ -14,7 +14,7 @@ function MyWork() {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/projects')
+    fetch('/api/projects')
       .then((res) => res.json())
       .then((data) => setProjects(data))
       .catch((err) => console.error('Error fetching projects:', err));
@@ -27,7 +27,7 @@ function MyWork() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admin/login', {
+      const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -56,7 +56,7 @@ function MyWork() {
   const handleNewProjectSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    const res = await fetch('http://localhost:5000/api/projects', {
+    const res = await fetch('/api/projects', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ function MyWork() {
   // Save edited project to backend
   const handleSaveEdit = async (projectId) => {
     const token = localStorage.getItem('token');
-    const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+    const res = await fetch(`/api/projects/${projectId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ const handleDeleteProject = async (projectId) => {
   if (!confirmDelete) return;
 
   try {
-    const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+    const res = await fetch(`/api/projects/${projectId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
