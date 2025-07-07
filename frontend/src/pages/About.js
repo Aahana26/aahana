@@ -21,7 +21,7 @@ function About() {
 
   const fetchAbout = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/about');
+      const res = await fetch('/api/about');
       if (!res.ok) {
         const text = await res.text();
         console.error('Error response text:', text);
@@ -43,7 +43,7 @@ function About() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/login', {
+      const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginDetails),
@@ -64,7 +64,7 @@ function About() {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/about', {
+      const res = await fetch('/api/admin/login', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
