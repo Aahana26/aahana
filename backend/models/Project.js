@@ -1,8 +1,14 @@
 import mongoose from 'mongoose';
 
 const ProjectSchema = new mongoose.Schema({
-  name: String,
-  description: String,
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
   slug: {
     type: String,
     required: true,
@@ -10,9 +16,10 @@ const ProjectSchema = new mongoose.Schema({
   }
 });
 
+
 // 🔁 Automatically generate slug from title
 ProjectSchema.pre('save', function (next) {
-  if (!this.slug) {
+  if (!this.slug && this.title) {
     this.slug = this.title
       .toLowerCase()
       .trim()
